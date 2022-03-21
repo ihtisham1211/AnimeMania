@@ -1,15 +1,20 @@
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import { useEffect } from 'react'
 
-const IndexPage = () => (
-  <Layout title="Home | Next.js + TypeScript Example">
-    <h1>Hello Next.js 👋</h1>
-    <p>
-      <Link href="/about">
-        <a>About</a>
-      </Link>
-    </p>
-  </Layout>
-)
+import Layout from '../components/Layout'
+import { fetcher } from '../utils/fetcher'
+
+const IndexPage = () => {
+  useEffect(() => {
+    fetcher('api/v1/onGoingSeries')
+      .then((d) => console.log(d))
+      .catch((d) => console.log(d))
+  }, [])
+
+  return (
+    <Layout title="Home | Next.js + TypeScript Example">
+      <div className="m-10">helo screen</div>
+    </Layout>
+  )
+}
 
 export default IndexPage
