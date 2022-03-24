@@ -9,15 +9,6 @@ export const animeContentHandler = async (id) => {
   const body = await res.data
   const $ = cheerio.load(body)
   const promises = []
-  let check_zero_episode = false
-  const check_zero_episode_axios = await axios.get(
-    `${url.BASE_URL}${id.split('/')[2]}`
-  )
-  const check_zero_episode_body = await check_zero_episode_axios.data
-  const check_zero_episode_cheerio = cheerio.load(check_zero_episode_body)
-  if (check_zero_episode_cheerio('.entry-title').text() != '404') {
-    check_zero_episode = true
-  }
 
   $('div#wrapper_bg').each((index, element) => {
     const $element = $(element)
@@ -75,19 +66,15 @@ export const animeContentHandler = async (id) => {
       }
     })
 
-    if (check_zero_episode) {
-      episodes.unshift({ id: id.split('/')[2] })
-    }
-
     promises.push({
-      img: img,
-      synopsis: synopsis,
-      genres: genres,
-      released: released,
-      status: status,
-      otherName: otherName,
-      totalEpisodes: check_zero_episode ? totalEpisodes + 1 : totalEpisodes,
-      episodes: episodes,
+      img,
+      synopsis,
+      genres,
+      released,
+      status,
+      otherName,
+      totalEpisodes,
+      episodes,
     })
   })
   return await Promise.all(promises)

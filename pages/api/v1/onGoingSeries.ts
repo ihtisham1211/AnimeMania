@@ -21,22 +21,20 @@ const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
           const title = $element.find('a').text()
           promises.push(
             animeContentHandler(id).then((extra) => ({
-              title: title ? title : null,
-              img: extra[0] ? extra[0].img : null,
-              synopsis: extra[0] ? extra[0].synopsis : null,
-              genres: extra[0] ? extra[0].genres : null,
-              released: extra[0] ? extra[0].released : null,
-              status: extra[0] ? extra[0].status : null,
-              otherName: extra[0] ? extra[0].otherName : null,
-              totalEpisodes: extra[0] ? extra[0].totalEpisodes : null,
-              episodes: extra[0] ? extra[0].episodes : null,
+              title,
+              img: extra[0].img,
+              synopsis: extra[0].synopsis,
+              genres: extra[0].genres,
+              released: extra[0].released,
+              status: extra[0].status,
+              otherName: extra[0].otherName,
+              totalEpisodes: extra[0].totalEpisodes,
+              episodes: extra[0].episodes,
             }))
           )
         })
     })
-    const rest = await Promise.all(promises)
-    console.log(rest)
-    res.status(200).json({ helo: 'world' })
+    res.status(200).json(await Promise.all(promises))
   } catch (err: any) {
     res.status(500).json({ statusCode: 500, message: err.message })
   }
