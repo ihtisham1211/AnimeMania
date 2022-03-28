@@ -2,17 +2,16 @@ import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { animeContentHandler } from '../../../utils/api/animeContentHandler'
-import { url } from '../../../utils/api/URL'
+import { animeContentHandler } from '../../utils/api/animeContentHandler'
+import { url } from '../../utils/api/URL'
 
-const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const body = (await axios.get(`${url.BASE_URL}`)).data
-
     const $ = cheerio.load(body)
     const promises: any[] = []
 
-    Array.from({ length: 30 }, (v, k) => {
+    Array.from({ length: req.body.item || 5 }, (v, k) => {
       $('div.main_body div.series nav.menu_series ul li')
         .eq(k + 1)
         .each((index, element) => {

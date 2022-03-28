@@ -2,8 +2,8 @@ import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-import { animeContentHandler } from '../../../utils/api/animeContentHandler'
-import { url } from '../../../utils/api/URL'
+import { animeContentHandler } from '../../utils/api/animeContentHandler'
+import { url } from '../../utils/api/URL'
 
 const handler = async (_req: NextApiRequest, res: NextApiResponse) => {
   try {
