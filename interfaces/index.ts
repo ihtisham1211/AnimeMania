@@ -4,7 +4,14 @@
 //
 // import { User } from 'path/to/interfaces';
 
-export type User = {
-  id: number
-  name: string
+export interface Anime {
+  title: string
+  img: string
+  synopsis: string
+  genres: string[]
+  released: number
+  status: string
+  otherName: string
+  totalEpisodes: number
+  episodes: { id: string }
 }

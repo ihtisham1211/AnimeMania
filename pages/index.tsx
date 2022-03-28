@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
 import useSWR from 'swr'
 
 import Layout from '../components/Layout'
+import { Anime } from '../interfaces'
 import { post } from '../utils/fetcher'
 
 const IndexPage = () => {
@@ -10,14 +10,26 @@ const IndexPage = () => {
     post
   )
 
-  useEffect(() => {
-    console.log(data, error, isValidating)
-  }, [data, error, isValidating])
-
   return (
     <Layout title="Home | Next.js + TypeScript Example">
       <div className="m-10">
-        {isValidating ? 'loading...' : JSON.stringify(data)}
+        {isValidating
+          ? 'loading...'
+          : data.map((item: Anime) => {
+              return (
+                <div
+                  key={item.title}
+                  className="flex flex-col items-start m-3 rounded border-2 border-primary"
+                >
+                  <img src={item.img} className="w-10 h-10" />
+                  <span className="my-2">{item.title}</span>
+                  <span className="my-2">{item.synopsis}</span>
+                  <span className="my-2">{item.totalEpisodes}</span>
+                  <span className="my-2">{item.otherName}</span>
+                  <span className="my-2">{item.status}</span>
+                </div>
+              )
+            })}
       </div>
     </Layout>
   )
